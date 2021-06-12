@@ -14,6 +14,21 @@ ABOUT = [
          'Author: Weronika Tomczuk',
          'I am student of applied mathematics at the \nWrocław University of Science and Technology.\n'
          'I made this game for Programming course.']
+Instructions=['The aim in Tetris is simple. \n'
+              'You bring down blocks from the top of the screen.\n '
+              'You can move the blocks around,\n '
+              'either left to right and/or you can rotate them.\n '
+              'The blocks fall at a certain rate,\n '
+              'but you can make them fall faster\n '
+              'if you’re sure of your positioning.\n '
+              'Your objective is to get all the blocks\n '
+              'to fill all the empty space in a line at the bottom of the screen.\n '
+              'Whenever you do this,\n '
+              'you’ll find that the blocks vanish and you get awarded some points.\n'
+              'A goal gives us a reason to play the game.\n '
+              'Tetris offers an incredibly simple reason\n '
+              'to play—pitting your wits against the computerized block dropper\n '
+              'in order to last as long as you can.']
 DIFFICULTY = ['EASY']
 FPS = 60
 WINDOW_SIZE = (800, 700)
@@ -26,9 +41,7 @@ surface: Optional['pygame.Surface'] = None
   #  )
 #background_image.draw(win)
 
-# -----------------------------------------------------------------------------
-# Methods
-# -----------------------------------------------------------------------------
+
 def change_difficulty(value: Tuple[Any, int], difficulty: str) -> None:
     """
     Change difficulty of the game.
@@ -141,22 +154,22 @@ def menu(test: bool = False) -> None:
     :return: None
     """
 
-    # -------------------------------------------------------------------------
+
     # Globals
-    # -------------------------------------------------------------------------
+
     global clock
     global main_menu
     global surface
 
-    # -------------------------------------------------------------------------
+
     # Create window
-    # -------------------------------------------------------------------------
-    surface = create_example_window('Tetris', WINDOW_SIZE)
+
+    surface = pygame.display.set_mode(WINDOW_SIZE)
     clock = pygame.time.Clock()
 
-    # -------------------------------------------------------------------------
+
     # Create menus: Play Menu
-    # -------------------------------------------------------------------------
+
     play_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.7,
         title='Play Menu',
@@ -188,9 +201,9 @@ def menu(test: bool = False) -> None:
     #play_menu.add.button('Another menu', play_submenu)
     play_menu.add.button('Return to main menu', pygame_menu.events.BACK)
 
-    # -------------------------------------------------------------------------
+
     # Create menus:About
-    # -------------------------------------------------------------------------
+
     about_theme = pygame_menu.themes.THEME_DEFAULT.copy()
     about_theme.widget_margin = (0, 0)
 
@@ -206,6 +219,22 @@ def menu(test: bool = False) -> None:
     about_menu.add.vertical_margin(30)
     about_menu.add.button('Return to menu', pygame_menu.events.BACK)
 
+    #create instructions menu
+    instruction_theme = pygame_menu.themes.THEME_DEFAULT.copy()
+    instruction_theme.widget_margin = (0, 0)
+
+    instruction_menu = pygame_menu.Menu(
+        height=WINDOW_SIZE[1] * 0.9,
+        theme=instruction_theme,
+        title='Game rules',
+        width=WINDOW_SIZE[0] * 0.9
+    )
+
+    for i in Instructions:
+        instruction_menu.add.label(i, align=pygame_menu.locals.ALIGN_LEFT, font_size=20)
+    instruction_menu.add.vertical_margin(30)
+    instruction_menu.add.button('Return to menu', pygame_menu.events.BACK)
+
     # -------------------------------------------------------------------------
     # Create menus: Main
     # -------------------------------------------------------------------------
@@ -219,12 +248,14 @@ def menu(test: bool = False) -> None:
     )
 
     main_menu.add.button('Play', play_menu)
+    main_menu.add.button('Instructions', instruction_menu)
     main_menu.add.button('About an author', about_menu)
     main_menu.add.button('Quit', pygame_menu.events.EXIT)
 
-    # -------------------------------------------------------------------------
+
+  
     # Main loop
-    # -------------------------------------------------------------------------
+
     while True:
 
         # Tick
