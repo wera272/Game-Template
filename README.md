@@ -1,6 +1,7 @@
 # Tetris
 ## Author: Weronika Tomczuk
 ### Short description
+
 ### Technologies
  **name** - description
 
