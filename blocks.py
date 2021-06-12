@@ -1,6 +1,6 @@
 import pygame
 import random
-'''uruchamia grę ponownie po przegraniu'''
+
 pygame.init()
 pygame.font.init()
 
@@ -121,7 +121,7 @@ T = [['.....',
       '.....']]
 
 shapes = [S, Z, I, O, J, L, T]
-shape_colors = [(111, 255, 29), (255, 32, 111), (231, 255, 255), (255, 255, 111), (255, 165, 212), (189, 0, 255), (128, 225, 128)]
+shape_colors = [(148, 0, 211), (75, 0, 130), (0, 0, 255), (0, 255, 0), (255, 255, 0), (255, 127, 0), (255, 0, 0)]
 # index 0 - 6 represent shape
 
 
@@ -132,3 +132,6 @@ class Blocks(object):  #
         self.shape = shape
         self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
+def get_shape():
+    return Blocks(5, 0, random.choice(shapes))
+pygame.display.update()
