@@ -12,6 +12,17 @@ def create_grid(locked_pos={}):  # *
                 grid[i][j] = c
     return grid
 
+def draw_grid(surface, grid):
+    sx = top_left_x
+    sy = top_left_y
+
+    for i in range(len(grid)):
+        pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width, sy+ i*block_size))
+        for j in range(len(grid[i])):
+            pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy),(sx + j*block_size, sy + play_height))
+
+
+
 def draw_window(surface, grid, score=0, last_score = 0):
     surface.fill((128,128,128))
 
