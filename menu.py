@@ -10,6 +10,17 @@ from main import *
 # -----------------------------------------------------------------------------
 # Constants and global variables
 # -----------------------------------------------------------------------------
+my_file = open("scores.txt", "r")
+
+list_of_lists = []
+for line in my_file:
+  stripped_line = line.strip()
+  line_list = stripped_line.split()
+  list_of_lists.append(line_list)
+
+my_file.close()
+
+print(list_of_lists)
 ABOUT = [
          'Author: Weronika Tomczuk',
          'I am student of applied mathematics at the \nWrocław University of Science and Technology.\n'
@@ -198,9 +209,25 @@ def menu(test: bool = False) -> None:
                             ('3 - Hard', 'HARD')],
                            onchange=change_difficulty,
                            selector_id='select_difficulty')
-    #play_menu.add.button('Another menu', play_submenu)
+
     play_menu.add.button('Return to main menu', pygame_menu.events.BACK)
 
+    #highscores
+    scores_theme = pygame_menu.themes.THEME_DEFAULT.copy()
+    scores_theme.widget_margin = (0, 0)
+
+    scores_menu = pygame_menu.Menu(
+        height=WINDOW_SIZE[1] * 0.6,
+        theme=scores_theme,
+        title='Highscores',
+        width=WINDOW_SIZE[0] * 0.6
+    )
+
+    for i in list_of_lists:
+
+        scores_menu.add.label(i[0], align=pygame_menu.locals.ALIGN_LEFT, font_size=20)
+    scores_menu.add.vertical_margin(30)
+    scores_menu.add.button('Return to menu', pygame_menu.events.BACK)
 
     # Create menus:About
 
@@ -249,6 +276,7 @@ def menu(test: bool = False) -> None:
 
     main_menu.add.button('Play', play_menu)
     main_menu.add.button('Instructions', instruction_menu)
+    main_menu.add.button('Highscores', scores_menu)
     main_menu.add.button('About an author', about_menu)
     main_menu.add.button('Quit', pygame_menu.events.EXIT)
 
