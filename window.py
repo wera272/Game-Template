@@ -1,6 +1,4 @@
-
 from blocks import *
-
 
 def create_grid(locked_pos={}):  # *
     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
@@ -22,6 +20,40 @@ def draw_grid(surface, grid):
             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy),(sx + j*block_size, sy + play_height))
 
 
+def valid_space(shape, grid):
+    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+    accepted_pos = [j for sub in accepted_pos for j in sub]
+
+    formatted = convert_shape_format(shape)
+
+    for pos in formatted:
+        if pos not in accepted_pos:
+            if pos[1] > -1:
+                return False
+    return True
+6
+def clear_rows(grid, locked):
+
+    inc = 0
+    for i in range(len(grid)-1, -1, -1):
+        row = grid[i]
+        if (0,0,0) not in row:
+            inc += 1
+            ind = i
+            for j in range(len(row)):
+                try:
+                    del locked[(j,i)]
+                except:
+                    continue
+
+    if inc > 0:
+        for key in sorted(list(locked), key=lambda x: x[1])[::-1]:
+            x, y = key
+            if y < ind:
+                newKey = (x, y + inc)
+                locked[newKey] = locked.pop(key)
+
+    return inc
 
 def draw_window(surface, grid, score=0, last_score = 0):
     surface.fill((128,128,128))
@@ -64,4 +96,5 @@ def draw_window(surface, grid, score=0, last_score = 0):
     pygame.draw.rect(surface, (128, 128, 128), (top_left_x, top_left_y, play_width, play_height), 5)
 
     draw_grid(surface, grid)
+
     #pygame.display.update()
