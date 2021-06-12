@@ -1,12 +1,12 @@
-__all__ = ['tetris-main']
+__all__ = ['main']
 
-import pygame
 import pygame_menu
 from pygame_menu.examples import create_example_window
 
 from random import randrange
 from typing import Tuple, Any, Optional, List
-#from tetris-main import *
+
+from main import *
 # -----------------------------------------------------------------------------
 # Constants and global variables
 # -----------------------------------------------------------------------------
@@ -127,11 +127,11 @@ def main_background() -> None:
     :return: None
     """
     global surface
-    #surface.fill((128, 0, 128))
-    background_image = pygame_menu.BaseImage(
-        'rainbow.png'
-    )
-    background_image.draw(win)
+    surface.fill((128, 0, 128))
+    #background_image = pygame_menu.BaseImage(
+    #    'rainbow.png'
+    #)
+    #background_image.draw(win)
 
 
 def menu(test: bool = False) -> None:
