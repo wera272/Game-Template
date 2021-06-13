@@ -1,15 +1,13 @@
 __all__ = ['main']
 
 import pygame_menu
-from pygame_menu.examples import create_example_window
+
 
 from random import randrange
 from typing import Tuple, Any, Optional, List
 
 from main import *
-# -----------------------------------------------------------------------------
 # Constants and global variables
-# -----------------------------------------------------------------------------
 my_file = open("scores.txt", "r")
 
 list_of_lists = []
@@ -44,16 +42,14 @@ DIFFICULTY = ['EASY']
 FPS = 60
 WINDOW_SIZE = (800, 700)
 
-clock: Optional['pygame.time.Clock'] = None
-main_menu: Optional['pygame_menu.Menu'] = None
-surface: Optional['pygame.Surface'] = None
+
 #background_image = pygame_menu.BaseImage(
  #       'rainbow.png'
   #  )
 #background_image.draw(win)
 
 
-def change_difficulty(value: Tuple[Any, int], difficulty: str) -> None:
+def change_difficulty(value: Tuple[Any, int], difficulty: str):
     """
     Change difficulty of the game.
     :param value: Tuple containing the data of the selected object
@@ -65,12 +61,12 @@ def change_difficulty(value: Tuple[Any, int], difficulty: str) -> None:
     DIFFICULTY[0] = difficulty
 
 
-def random_color() -> Tuple[int, int, int]:
+def random_color():
     """
     Return a random color.
     :return: Color tuple
     """
-    return randrange(0, 255), randrange(0, 255), randrange(0, 255)
+    return randrange(0, 12), randrange(0, 178), randrange(0,31)
 
 
 def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False) -> None:
@@ -145,20 +141,24 @@ def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False
             break
         main(win)
 
-def main_background() -> None:
+def main_background():
     """
     Function used by menus, draw on background while menu is active.
     :return: None
     """
     global surface
-    surface.fill((128, 0, 128))
+    surface.fill((0, 0, 0))
+    #surface = pygame.Surface((800, 700))
+    #surface = surface.convert_alpha()
+    #surface.fill((0, 0, 0, 0))
+    #image = pygame.Surface([640, 480], pygame.SRCALPHA)
     #background_image = pygame_menu.BaseImage(
     #    'rainbow.png'
     #)
     #background_image.draw(win)
 
 
-def menu(test: bool = False) -> None:
+def menu(test: bool = False):
     """
     Main program.
     :param test: Indicate function is being tested
@@ -222,10 +222,12 @@ def menu(test: bool = False) -> None:
         title='Highscores',
         width=WINDOW_SIZE[0] * 0.6
     )
+    list=['1. The best','2. The second best','3. The third best']
+    zip_iterator = zip(list, list_of_lists)
+    dic = dict(zip_iterator)
+    for key in dic:
 
-    for i in list_of_lists:
-
-        scores_menu.add.label(i[0], align=pygame_menu.locals.ALIGN_LEFT, font_size=20)
+        scores_menu.add.label('       {} score is {} points.'.format(key,dic[key][0]), align=pygame_menu.locals.ALIGN_LEFT, font_size=20)
     scores_menu.add.vertical_margin(30)
     scores_menu.add.button('Return to menu', pygame_menu.events.BACK)
 
