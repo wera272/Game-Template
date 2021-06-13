@@ -44,10 +44,12 @@ FPS = 60
 WINDOW_SIZE = (800, 700)
 
 
-#background_image = pygame_menu.BaseImage(
- #       'rainbow.png'
-  #  )
-#background_image.draw(win)
+main_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
+font = pygame_menu.font.FONT_MUNRO
+main_theme.widget_font=font
+main_theme.title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE_TITLE
+main_theme.background_color=(0, 0, 0, 0)
+main_theme.title_font=font
 
 
 def change_difficulty(value: Tuple[Any, int], difficulty: str):
@@ -62,12 +64,7 @@ def change_difficulty(value: Tuple[Any, int], difficulty: str):
     DIFFICULTY[0] = difficulty
 
 
-def random_color():
-    """
-    Return a random color.
-    :return: Color tuple
-    """
-    return randrange(0, 12), randrange(0, 178), randrange(0,31)
+
 
 
 def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False) -> None:
@@ -97,7 +94,7 @@ def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False
     f_esc = font.render('Press ESC to go back to the main menu', True, (255, 255, 255))
 
     # Draw random color and text
-    bg_color = random_color()
+    bg_color = (128,128,128)
 
     # Reset main menu and disable
     # You also can set another menu, like a 'pause menu', or just use the same
@@ -149,7 +146,11 @@ def main_background():
     :return: None
     """
     global surface
-    surface.fill((0, 0, 0))
+    surface.fill((255, 255, 255))
+    background_image = pygame_menu.BaseImage(
+        'tetris4.jpg'
+    )
+    background_image.draw(win)
     #surface = pygame.Surface((800, 700))
     #surface = surface.convert_alpha()
     #surface.fill((0, 0, 0, 0))
@@ -189,17 +190,7 @@ def menu(test: bool = False):
         width=WINDOW_SIZE[0] * 0.75
     )
 
-    submenu_theme = pygame_menu.themes.THEME_DEFAULT.copy()
-    submenu_theme.widget_font_size = 15
-    play_submenu = pygame_menu.Menu(
-        height=WINDOW_SIZE[1] * 0.5,
-        theme=submenu_theme,
-        title='Submenu',
-        width=WINDOW_SIZE[0] * 0.7
-    )
-    for i in range(30):
-        play_submenu.add.button('Back {0}'.format(i), pygame_menu.events.BACK)
-    play_submenu.add.button('Return to main menu', pygame_menu.events.RESET)
+
 
     play_menu.add.button('Start',  # When pressing return -> play(DIFFICULTY[0], font)
                          play_function,
@@ -215,12 +206,12 @@ def menu(test: bool = False):
     play_menu.add.button('Return to main menu', pygame_menu.events.BACK)
 
     #highscores
-    scores_theme = pygame_menu.themes.THEME_DEFAULT.copy()
+    scores_theme = pygame_menu.themes.THEME_BLUE.copy()
     scores_theme.widget_margin = (0, 0)
 
     scores_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.6,
-        theme=scores_theme,
+        theme=main_theme,
         title='Highscores',
         width=WINDOW_SIZE[0] * 0.6
     )
@@ -240,7 +231,7 @@ def menu(test: bool = False):
 
     about_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.6,
-        theme=about_theme,
+        theme=main_theme,
         title='About an author',
         width=WINDOW_SIZE[0] * 0.6
     )
@@ -256,7 +247,7 @@ def menu(test: bool = False):
 
     instruction_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.9,
-        theme=instruction_theme,
+        theme=main_theme,
         title='Game rules',
         width=WINDOW_SIZE[0] * 0.9
     )
@@ -269,7 +260,6 @@ def menu(test: bool = False):
     # -------------------------------------------------------------------------
     # Create menus: Main
     # -------------------------------------------------------------------------
-    main_theme = pygame_menu.themes.THEME_DEFAULT.copy()
 
     main_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.6,
