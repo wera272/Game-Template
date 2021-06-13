@@ -9,6 +9,7 @@ from typing import Tuple, Any, Optional, List
 from main import *
 # Constants and global variables
 my_file = open("scores.txt", "r")
+run = True
 
 list_of_lists = []
 for line in my_file:
@@ -86,14 +87,14 @@ def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False
     global clock
 
     if difficulty == 'EASY':
-        f = font.render('Playing as a baby (easy)', True, (255, 255, 255))
+        f = font.render('Great job !', True, (255, 255, 255))
     elif difficulty == 'MEDIUM':
         f = font.render('Playing as a kid (medium)', True, (255, 255, 255))
     elif difficulty == 'HARD':
         f = font.render('Playing as a champion (hard)', True, (255, 255, 255))
     else:
         raise ValueError('unknown difficulty {0}'.format(difficulty))
-    f_esc = font.render('Press ESC to open the menu', True, (255, 255, 255))
+    f_esc = font.render('Press ESC to go back to the main menu', True, (255, 255, 255))
 
     # Draw random color and text
     bg_color = random_color()
@@ -105,41 +106,42 @@ def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False
     main_menu.full_reset()
 
     frame = 0
-
+    main(win)
     while True:
+        while run:
+            # noinspection PyUnresolvedReferences
+            clock.tick(60)
+            frame += 1
 
-        # noinspection PyUnresolvedReferences
-        clock.tick(60)
-        frame += 1
+            # Application events
+            events = pygame.event.get()
+            for e in events:
+                if e.type == pygame.QUIT:
+                    exit()
+                elif e.type == pygame.KEYDOWN:
+                    if e.key == pygame.K_ESCAPE:
+                        main_menu.enable()
 
-        # Application events
-        events = pygame.event.get()
-        for e in events:
-            if e.type == pygame.QUIT:
-                exit()
-            elif e.type == pygame.KEYDOWN:
-                if e.key == pygame.K_ESCAPE:
-                    main_menu.enable()
+                        # Quit this function, then skip to loop of main-menu on line 256
+                        return
 
-                    # Quit this function, then skip to loop of main-menu on line 256
-                    return
+            # Pass events to main_menu
+            if main_menu.is_enabled():
+                main_menu.update(events)
 
-        # Pass events to main_menu
-        if main_menu.is_enabled():
-            main_menu.update(events)
+            # Continue playing
+            surface.fill(bg_color)
+            surface.blit(f, (int((WINDOW_SIZE[0] - f.get_width()) / 2),
+                             int(WINDOW_SIZE[1] / 2 - f.get_height())))
+            surface.blit(f_esc, (int((WINDOW_SIZE[0] - f_esc.get_width()) / 2),
+                                 int(WINDOW_SIZE[1] / 2 + f_esc.get_height())))
+            pygame.display.flip()
 
-        # Continue playing
-        surface.fill(bg_color)
-        surface.blit(f, (int((WINDOW_SIZE[0] - f.get_width()) / 2),
-                         int(WINDOW_SIZE[1] / 2 - f.get_height())))
-        surface.blit(f_esc, (int((WINDOW_SIZE[0] - f_esc.get_width()) / 2),
-                             int(WINDOW_SIZE[1] / 2 + f_esc.get_height())))
-        pygame.display.flip()
+            # If test returns
+            if test and frame == 2:
+                break
 
-        # If test returns
-        if test and frame == 2:
-            break
-        main(win)
+
 
 def main_background():
     """
@@ -285,8 +287,8 @@ def menu(test: bool = False):
 
   
     # Main loop
- 
-    while True:
+
+    while run:
 
         # Tick
         clock.tick(FPS)
@@ -310,6 +312,7 @@ def menu(test: bool = False):
         # At first loop returns
         if test:
             break
+    pygame_menu.events.BACK
 
 
 if __name__ == '__main__':
