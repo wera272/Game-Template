@@ -57,35 +57,37 @@ def clear_rows(grid, locked):
 
     return inc
 def draw_text_middle(surface, text, size, color):
-    font =  pygame_menu.font.FONT_MUNRO
-    label = font.render(text, 1, color)
+    myfont = pygame.font.Font("munro.ttf", 60, bold=True)
+    label = myfont.render(text, 1, color)
 
     surface.blit(label, (top_left_x + play_width /2 - (label.get_width()/2), top_left_y + play_height/2 - label.get_height()/2))
 
 
 def draw_window(surface, grid, score=0, last_score = 0):
     surface.fill((0,0,0))
+    #bg = pygame.image.load("tetris8.jpg")
 
-
+    #bg = pygame.transform.scale(bg, (800, 700))
+    #surface.blit(bg, [0, 0])
     # INSIDE OF THE GAME LOOP
 
     pygame.font.init()
 
     myfont = pygame.font.Font("munro.ttf", 60, bold=True)
 
-    label = myfont.render('Tetris', 1, (255,255,255))
+    label = myfont.render('Tetris', 1, (255,0,128))
 
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     font = pygame.font.Font("munro.ttf", 30)
-    label = font.render('Score: ' + str(score), 1, (255,255,255))
+    label = font.render('Score: ' + str(score), 1, (255,0,128))
 
     sx = top_left_x + play_width + 50
     sy = top_left_y + play_height/2 - 100
 
     surface.blit(label, (sx + 20, sy + 160))
     # last score
-    label = font.render('High Score: ' + last_score, 1, (255,255,255))
+    label = font.render('High Score: ' + last_score, 1, (255,0,128))
 
     sx = top_left_x - 200
     sy = top_left_y + 200
@@ -98,7 +100,7 @@ def draw_window(surface, grid, score=0, last_score = 0):
         for j in range(len(grid[i])):
             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
 
-    pygame.draw.rect(surface, (128, 128, 128), (top_left_x, top_left_y, play_width, play_height), 5)
+    pygame.draw.rect(surface, (255,0,128), (top_left_x, top_left_y, play_width, play_height), 5)
 
     draw_grid(surface, grid)
     #pygame.display.update()

@@ -1,12 +1,8 @@
 __all__ = ['main']
 
-import pygame_menu
-
-
-from random import randrange
 from typing import Tuple, Any, Optional, List
-
 from main import *
+
 # Constants and global variables
 my_file = open("scores.txt", "r")
 run = True
@@ -22,7 +18,7 @@ my_file.close()
 print(list_of_lists)
 ABOUT = [
          'Author: Weronika Tomczuk',
-         'I am student of applied mathematics at the \nWrocław University of Science and Technology.\n'
+         'I am student of applied mathematics at the \nWroclaw University of Science and Technology.\n'
          'I made this game for Programming course.']
 Instructions=['The aim in Tetris is simple. \n'
               'You bring down blocks from the top of the screen.\n '
@@ -67,7 +63,7 @@ def change_difficulty(value: Tuple[Any, int], difficulty: str):
 
 
 
-def play_function(difficulty: List, font: font, test: bool = False) -> None:
+def play_function(difficulty: List, font: font, test: bool = False):
     """
     Main game function.
     :param difficulty: Difficulty of the game
@@ -79,24 +75,12 @@ def play_function(difficulty: List, font: font, test: bool = False) -> None:
     difficulty = difficulty[0]
     assert isinstance(difficulty, str)
 
-    # Define globals
-    global main_menu
-    global clock
 
-    if difficulty == 'EASY':
 
-        f = font.render('Great job !', 1, (255, 255, 255))
-
-    elif difficulty == 'MEDIUM':
-        f = font.render('Playing as a kid (medium)', True, (255, 255, 255))
-    elif difficulty == 'HARD':
-        f = font.render('Playing as a champion (hard)', True, (255, 255, 255))
-    else:
-        raise ValueError('unknown difficulty {0}'.format(difficulty))
+    font = pygame.font.Font('Munro.ttf', 30)
+    f = font.render('Great job!', 1, (255, 0, 128))
     f_esc = font.render('Press ESC to go back to the main menu', True, (255, 255, 255))
 
-    # Draw random color and text
-    bg_color = (128,128,128)
 
     # Reset main menu and disable
     # You also can set another menu, like a 'pause menu', or just use the same
@@ -135,9 +119,9 @@ def play_function(difficulty: List, font: font, test: bool = False) -> None:
             )
             background_image.draw(win)
             surface.blit(f, (int((WINDOW_SIZE[0] - f.get_width()) / 2),
-                             int(WINDOW_SIZE[1] / 2 - f.get_height())))
+                             int(WINDOW_SIZE[1] / 2 + f.get_height())))
             surface.blit(f_esc, (int((WINDOW_SIZE[0] - f_esc.get_width()) / 2),
-                                 int(WINDOW_SIZE[1] / 2 + f_esc.get_height())))
+                                 int(WINDOW_SIZE[1] / 2 - f_esc.get_height())))
             pygame.display.flip()
 
             # If test returns
@@ -157,14 +141,6 @@ def main_background():
         'tetris4.jpg'
     )
     background_image.draw(win)
-    #surface = pygame.Surface((800, 700))
-    #surface = surface.convert_alpha()
-    #surface.fill((0, 0, 0, 0))
-    #image = pygame.Surface([640, 480], pygame.SRCALPHA)
-    #background_image = pygame_menu.BaseImage(
-    #    'rainbow.png'
-    #)
-    #background_image.draw(win)
 
 
 def menu(test: bool = False):
@@ -196,8 +172,6 @@ def menu(test: bool = False):
         theme=main_theme,
         width=WINDOW_SIZE[0] * 0.75
     )
-
-
 
     play_menu.add.button('Start',  # When pressing return -> play(DIFFICULTY[0], font)
                          play_function,
@@ -231,9 +205,6 @@ def menu(test: bool = False):
 
     # Create menus:About
 
-    about_theme = pygame_menu.themes.THEME_DEFAULT.copy()
-    about_theme.widget_margin = (0, 0)
-
     about_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.6,
         theme=main_theme,
@@ -247,18 +218,16 @@ def menu(test: bool = False):
     about_menu.add.button('Return to menu', pygame_menu.events.BACK)
 
     #create instructions menu
-    instruction_theme = pygame_menu.themes.THEME_DEFAULT.copy()
-    instruction_theme.widget_margin = (0, 0)
 
     instruction_menu = pygame_menu.Menu(
-        height=WINDOW_SIZE[1] * 0.9,
+        height=WINDOW_SIZE[1] * 0.8,
         theme=main_theme,
         title='Game rules',
-        width=WINDOW_SIZE[0] * 0.9
+        width=WINDOW_SIZE[0] * 0.8
     )
 
     for i in Instructions:
-        instruction_menu.add.label(i, align=pygame_menu.locals.ALIGN_LEFT, font_size=20)
+        instruction_menu.add.label(i, align=pygame_menu.locals.ALIGN_LEFT, font_size=20, font_color=(255,255,255))
     instruction_menu.add.vertical_margin(30)
     instruction_menu.add.button('Return to menu', pygame_menu.events.BACK)
 
@@ -311,4 +280,7 @@ def menu(test: bool = False):
 
 
 if __name__ == '__main__':
+    pygame.display.set_caption('Tetris')
+    icon = pygame.image.load('tet.png')
+    pygame.display.set_icon(icon)
     menu()

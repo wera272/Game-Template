@@ -1,16 +1,13 @@
-from blocks import *
+
 def update_score(nscore):
-    #score = max_score()
 
     with open('scores.txt', 'r') as f:
-        file = f.readlines()  # reads all the lines in as a list
-        #last = int(file[0])  # gets the first line of the file
         f = open('scores.txt', 'r')  # opens the file in read mode
         file = f.readlines()  # reads all the lines in as a list
         first = int(file[0])  # gets the first line of the file
         second = int(file[1])
         third = int(file[2])
-        score_list = [first, second, third]
+
         for i in range(len(file)):
 
             if first < int(nscore):  # sees if the current score is greater than the previous best
@@ -65,5 +62,6 @@ def max_score():
         score = lines[0].strip()
 
     return score
+
 
 
