@@ -1,5 +1,7 @@
 from blocks import *
-
+import pygame_menu
+pygame.init()
+pygame.font.init()
 def create_grid(locked_pos={}):  # *
     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
 
@@ -55,23 +57,27 @@ def clear_rows(grid, locked):
 
     return inc
 def draw_text_middle(surface, text, size, color):
-    font = pygame.font.SysFont("comicsans", size, bold=True)
+    font =  pygame_menu.font.FONT_MUNRO
     label = font.render(text, 1, color)
 
     surface.blit(label, (top_left_x + play_width /2 - (label.get_width()/2), top_left_y + play_height/2 - label.get_height()/2))
 
 
 def draw_window(surface, grid, score=0, last_score = 0):
-    surface.fill((128,128,128))
+    surface.fill((0,0,0))
+
+
+    # INSIDE OF THE GAME LOOP
 
     pygame.font.init()
-    font = pygame.font.SysFont('Berlin Sans FB', 60, bold=True)
-    label = font.render('Tetris', 1, (255,255,255))
+
+    myfont = pygame.font.Font("munro.ttf", 60, bold=True)
+
+    label = myfont.render('Tetris', 1, (255,255,255))
 
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
-    # current score
-    font = pygame.font.SysFont('Berlin Sans FB', 30)
+    font = pygame.font.Font("munro.ttf", 30)
     label = font.render('Score: ' + str(score), 1, (255,255,255))
 
     sx = top_left_x + play_width + 50
@@ -85,7 +91,7 @@ def draw_window(surface, grid, score=0, last_score = 0):
     sy = top_left_y + 200
 
     surface.blit(label, (sx , sy + 160))
-    font = pygame.font.SysFont('Berlin Sans FB', 30)
+    font = pygame.font.SysFont("munro.ttf", 30)
 
 
     for i in range(len(grid)):

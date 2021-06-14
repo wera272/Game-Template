@@ -150,7 +150,7 @@ def get_shape():
     return Blocks(5, 0, random.choice(shapes))
 
 def draw_next_shape(shape, surface):
-    font = pygame.font.SysFont('Berlin Sans FB', 30)
+    font = pygame.font.Font('Munro.ttf', 30)
     label = font.render('Next Shape', 1, (255,255,255))
 
     sx = top_left_x + play_width + 50
@@ -164,6 +164,9 @@ def draw_next_shape(shape, surface):
                 pygame.draw.rect(surface, shape.color, (sx + j*block_size, sy + i*block_size, block_size, block_size), 0)
 
     surface.blit(label, (sx + 10, sy - 30))
+#bg = pygame.image.load("tetris4.jpg")
 
-
+#bg = pygame.transform.scale(bg, (800, 640))
+#win.blit(bg, [0, 0])
+# current score
 pygame.display.update()

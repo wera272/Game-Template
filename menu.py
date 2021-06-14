@@ -67,7 +67,7 @@ def change_difficulty(value: Tuple[Any, int], difficulty: str):
 
 
 
-def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False) -> None:
+def play_function(difficulty: List, font: font, test: bool = False) -> None:
     """
     Main game function.
     :param difficulty: Difficulty of the game
@@ -84,7 +84,9 @@ def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False
     global clock
 
     if difficulty == 'EASY':
-        f = font.render('Great job !', True, (255, 255, 255))
+
+        f = font.render('Great job !', 1, (255, 255, 255))
+
     elif difficulty == 'MEDIUM':
         f = font.render('Playing as a kid (medium)', True, (255, 255, 255))
     elif difficulty == 'HARD':
@@ -127,7 +129,11 @@ def play_function(difficulty: List, font: 'pygame.font.Font', test: bool = False
                 main_menu.update(events)
 
             # Continue playing
-            surface.fill(bg_color)
+            surface.fill((255, 255, 255))
+            background_image = pygame_menu.BaseImage(
+                'tetris4.jpg'
+            )
+            background_image.draw(win)
             surface.blit(f, (int((WINDOW_SIZE[0] - f.get_width()) / 2),
                              int(WINDOW_SIZE[1] / 2 - f.get_height())))
             surface.blit(f_esc, (int((WINDOW_SIZE[0] - f_esc.get_width()) / 2),
@@ -187,6 +193,7 @@ def menu(test: bool = False):
     play_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.7,
         title='Play Menu',
+        theme=main_theme,
         width=WINDOW_SIZE[0] * 0.75
     )
 
@@ -206,8 +213,6 @@ def menu(test: bool = False):
     play_menu.add.button('Return to main menu', pygame_menu.events.BACK)
 
     #highscores
-    scores_theme = pygame_menu.themes.THEME_BLUE.copy()
-    scores_theme.widget_margin = (0, 0)
 
     scores_menu = pygame_menu.Menu(
         height=WINDOW_SIZE[1] * 0.6,
