@@ -8,6 +8,8 @@ You can move the blocks around,
 either left to right and/or you can rotate them.
 Your objective is to get all the blocks  to fill all the empty space in a line at the bottom of the screen.
 Whenever you do this, you’ll find that the blocks vanish and you get awarded some points.
+![GitHub mainmenu](/Images/mainmenu.png)
+Format: ![Alt Text](https://github.com/wera272/Tetris-python_game/blob/main/Images/mainmenu.png)
 
 ### Technologies
  **Python** - the programming language, in which this code was written.
