@@ -115,7 +115,7 @@ def play_function(difficulty: List, font: font, test: bool = False):
             # Continue playing
             surface.fill((255, 255, 255))
             background_image = pygame_menu.BaseImage(
-                'tetris4.jpg'
+                'Images'+'\\'+'tetris4.jpg'
             )
             background_image.draw(win)
             surface.blit(f, (int((WINDOW_SIZE[0] - f.get_width()) / 2),
@@ -138,7 +138,7 @@ def main_background():
     global surface
     surface.fill((255, 255, 255))
     background_image = pygame_menu.BaseImage(
-        'tetris4.jpg'
+        'Images'+'\\'+'tetris4.jpg'
     )
     background_image.draw(win)
 
@@ -281,6 +281,6 @@ def menu(test: bool = False):
 
 if __name__ == '__main__':
     pygame.display.set_caption('Tetris')
-    icon = pygame.image.load('tet.png')
+    icon = pygame.image.load('Images'+'\\'+'tet.png')
     pygame.display.set_icon(icon)
     menu()

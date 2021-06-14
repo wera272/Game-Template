@@ -1,6 +1,6 @@
 from window import *
 from scores import *
-gameoverSound = pygame.mixer.Sound("gameover.wav")
+gameoverSound = pygame.mixer.Sound('Sounds'+'\\'+"gameover.wav")
 def main(win):
 
     locked_positions = {}
